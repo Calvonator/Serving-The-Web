@@ -6,7 +6,15 @@ REQUEST_QUEUE_SIZE = 5
 
 def handle_request(client_connection):
     request = client_connection.recv(1024)
-    print(request.decode())
+    request = request.decode()
+    flag = request[0:3]
+    clientNum = request[3]
+    print("Flag: " + flag)
+
+    if flag == "f01":
+        print("Incoming message from client #" + str(clientNum))
+
+    print(request)
     http_response = b"""
 HTTP/1.1 200 OK
 

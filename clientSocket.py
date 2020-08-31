@@ -1,4 +1,4 @@
-import socket
+import socket, sys
 from time import sleep
 
 class client_silly(object):
@@ -9,16 +9,19 @@ class client_silly(object):
         self.PORT = PORT
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.name = name
-        self.connect()
-        self.annoy_the_server(5)
 
-    
+
     def connect(self):
         self.sock.connect((self.RHOST, self.PORT))
 
-    def send_response(self, msg):
-        #msg = input("What message would you like to send?")
+    def send_msg(self):                             #Self-contained socket, will cause Pipe error if this function is run while the object is connected using connect fucntion
+        msg = "f01"
+        msg += client.name
+        msg += input("What is your messsage?")
+        msg += "\n"
+        self.connect()
         self.sock.sendall(msg.encode())
+        self.disconnect()
 
     def disconnect(self):
         close_response = 'Client ' + self.name + ' disconnecting...'
@@ -30,13 +33,15 @@ class client_silly(object):
             annoy_response = "Client " + self.name + ": Annoyance #" + str(x) + '\n' 
             self.sock.sendall(annoy_response.encode('utf-8'))
 
+clientname = sys.argv[1]
+client = client_silly(str(clientname), '127.0.0.1', 8888)
 
-client = client_silly('1', '127.0.0.1', 8888)
 
-#client.connect()
-client.send_response("hello lolsald")
-#client.annoy_the_server(5)
+client.connect()
+client.annoy_the_server(5)
 client.disconnect()
+
+#client.send_msg()
 
 #clients = [client_silly(str(x), '127.0.0.1', 8888) for x in range(5)]
 
