@@ -1,7 +1,15 @@
 import socket, pickle
+from passlib.context import CryptContext
 
 
 SERVER_ADDRESS = (HOST, PORT) = '127.0.0.1', 8888
+
+
+pwd_encrypt_context = CryptContext(
+    schemes = ["pbkdf2_sha256"],
+    default = "pbkdf2_sha256",
+    pbkdf2_sha256__default_rounds=30000
+)
 
 
 class login_object:
@@ -22,9 +30,10 @@ class client_silly(object):
         print("Please provide account details...")
         uname = input("Username:\n")
         pword = input("Password:\n")
+        
         newLogin = login_object()
         newLogin.username = uname
-        newLogin.password = pword
+        newLogin.password = pwd_encrypt_context.encrypt(pword) #Hash the password using sha256
         
         login_request = pickle.dumps(newLogin)
         
