@@ -33,7 +33,6 @@ class client_silly(object):
         self.sock.close()
 
 
-
     def connect(self):
         self.sock.connect((self.RHOST, self.PORT))
 

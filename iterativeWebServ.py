@@ -1,6 +1,6 @@
 import socket, mysql.connector, pickle, threading
 
-SERVER_ADDRESS = (HOST, PORT) = '', 8886
+SERVER_ADDRESS = (HOST, PORT) = '', 8888
 REQUEST_QUEUE_SIZE = 5
 
 logged = 0
