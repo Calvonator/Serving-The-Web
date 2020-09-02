@@ -1,7 +1,7 @@
 import socket, pickle
 
 
-SERVER_ADDRESS = (HOST, PORT) = '127.0.0.1', 8886
+SERVER_ADDRESS = (HOST, PORT) = '127.0.0.1', 8888
 
 
 class login_object:
@@ -28,9 +28,12 @@ class client_silly(object):
         
         login_request = pickle.dumps(newLogin)
         
+        print("Connecting..")
         self.connect()
+        print("Connected... Sending login data")
         self.sock.sendall(login_request)
         self.sock.close()
+        print("Closing Connection")
 
 
     def connect(self):
@@ -50,6 +53,6 @@ class client_silly(object):
         self.sock.sendall(close_response.encode())
         self.sock.close()
 
-client = client_silly('1', '127.0.0.1', 8887)
+client = client_silly('1', '192.168.80.132', 8888)
 
 client.login()
